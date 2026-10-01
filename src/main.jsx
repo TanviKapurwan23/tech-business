@@ -1,0 +1,31 @@
+import React,{useState} from 'react';
+import {createRoot} from 'react-dom/client';
+import {ArrowUpRight,ArrowRight,Check,ChevronDown,Sparkles,Workflow,Code2,BrainCircuit,Building2,Menu,X} from 'lucide-react';
+import './styles.css';
+
+const services=[
+ {icon:BrainCircuit,title:'AI systems',text:'Practical AI workflows that remove repetitive work and help teams make faster decisions.'},
+ {icon:Workflow,title:'Automation',text:'Connect the tools you already use and automate the handoffs slowing your team down.'},
+ {icon:Code2,title:'Custom software',text:'Internal tools, dashboards and customer-facing products built around your actual workflow.'},
+ {icon:Building2,title:'Digital operations',text:'Map broken processes, identify the highest-value fixes and turn them into a technology roadmap.'}
+];
+const steps=[['01','Tell us what is broken','A frustrating process, spreadsheet, manual task or customer experience. Start with the problem—not a technical brief.'],['02','We diagnose the opportunity','We understand the workflow, cost, bottleneck and desired outcome before recommending technology.'],['03','We build the smallest useful solution','Prototype first. Validate with your team. Then turn what works into reliable software.'],['04','We scale what works','Once a solution proves its value, we improve, integrate and productize it.']];
+function App(){
+ const [open,setOpen]=useState(false); const [sent,setSent]=useState(false); const [menu,setMenu]=useState(false);
+ const submit=e=>{e.preventDefault();setSent(true)};
+ return <div className="app">
+  <nav className="nav"><a className="brand" href="#top"><span className="mark">F</span> FOUNDRY</a><div className={'links '+(menu?'show':'')}><a href="#how">How it works</a><a href="#services">Capabilities</a><a href="#why">Why us</a><button className="navCta" onClick={()=>setOpen(true)}>Tell us your problem <ArrowUpRight size={16}/></button></div><button className="menu" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></nav>
+  <main id="top">
+   <section className="hero"><div className="eyebrow"><span className="pulse"></span> TECHNOLOGY FOR REAL BUSINESS PROBLEMS</div><h1>What’s slowing<br/><em>your business</em> down?</h1><p className="heroText">Tell us what’s broken. We diagnose the opportunity and build the technology to fix it.</p><div className="heroBtns"><button className="primary" onClick={()=>setOpen(true)}>Tell us the problem <ArrowRight size={18}/></button><a className="secondary" href="#how">See how we work <ArrowRight size={17}/></a></div><div className="proof"><div className="faces"><span>01</span><span>02</span><span>03</span></div><p>Built for founders & teams<br/><b>who want less busywork.</b></p></div></section>
+   <section className="ticker"><span>AI</span><i>•</i><span>AUTOMATION</span><i>•</i><span>SOFTWARE</span><i>•</i><span>OPERATIONS</span><i>•</i><span>AI</span><i>•</i><span>AUTOMATION</span></section>
+   <section className="statement"><div className="sectionTag">THE IDEA</div><div><h2>Don’t start with<br/><span>“What should we build?”</span></h2><p>Start with <strong>“What is costing us time, money or momentum?”</strong> We work backwards from the business problem to the right technology.</p></div></section>
+   <section id="how" className="process"><div className="sectionHead"><div className="sectionTag">HOW IT WORKS</div><h2>Problem first.<br/><span>Technology second.</span></h2></div><div className="steps">{steps.map(s=><div className="step" key={s[0]}><div className="num">{s[0]}</div><h3>{s[1]}</h3><p>{s[2]}</p></div>)}</div></section>
+   <section id="services" className="capabilities"><div className="sectionTag">WHAT WE BUILD</div><div className="capHead"><h2>From messy workflow<br/>to <span>working system.</span></h2><p>We use technology where it creates measurable leverage—not because technology is exciting.</p></div><div className="serviceGrid">{services.map(({icon:Icon,title,text})=><article className="service"><div className="icon"><Icon size={21}/></div><h3>{title}</h3><p>{text}</p><a href="#contact">Explore <ArrowUpRight size={15}/></a></article>)}</div></section>
+   <section id="why" className="manifesto"><div className="sectionTag">OUR APPROACH</div><div className="manifestoGrid"><div><h2>Build small.<br/><span>Prove value.</span><br/>Scale smart.</h2></div><div className="manifestoCopy"><p>We don't sell giant transformation projects before understanding the problem.</p><div className="checks"><div><Check/>Business outcome first</div><div><Check/>Prototype before overbuilding</div><div><Check/>Human workflow + AI where useful</div><div><Check/>Designed to grow with you</div></div></div></div></section>
+   <section className="cta" id="contact"><div className="glow"></div><Sparkles size={22}/><h2>Something in your business<br/><em>should work better.</em></h2><p>Tell us what it is. No technical jargon required.</p><button className="lightBtn" onClick={()=>setOpen(true)}>Start a conversation <ArrowUpRight size={17}/></button></section>
+  </main>
+  <footer><div className="brand"><span className="mark">F</span> FOUNDRY</div><p>Business problems → technology → leverage.</p><span>© 2026 Foundry</span></footer>
+  {open&&<div className="overlay" onClick={()=>setOpen(false)}><div className="modal" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setOpen(false)}><X/></button>{sent?<div className="success"><div className="successIcon"><Check/></div><h2>Problem received.</h2><p>We’ll review the workflow and get back to you with the next step.</p><button className="primary" onClick={()=>{setSent(false);setOpen(false)}}>Done</button></div>:<><div className="sectionTag">START HERE</div><h2>What’s the problem?</h2><p className="modalSub">Give us the messy version. We’ll ask the technical questions.</p><form onSubmit={submit}><label>Work email<input required type="email" placeholder="you@company.com"/></label><label>Company / brand<input required placeholder="Your company"/></label><label>What’s slowing you down?<textarea required rows="5" placeholder="e.g. Our team manually moves leads between WhatsApp and spreadsheets..."></textarea></label><button className="primary" type="submit">Send problem <ArrowRight size={17}/></button></form></>}</div></div>}
+ </div>
+}
+createRoot(document.getElementById('root')).render(<App/>);
